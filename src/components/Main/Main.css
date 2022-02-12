@@ -1,0 +1,9 @@
+.item-card {
+    cursor: pointer;
+    transition: background-color 200ms ease-in;
+}
+
+.item-card:hover {
+    transition: background-color 300ms ease-out;
+    background-color: rgb(238, 238, 238);
+}
