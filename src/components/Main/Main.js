@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
-import { Card, Form, Container, Row, Col } from 'react-bootstrap'
+import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
 import { items } from '../store/index'
+import { URL } from '../../credentials'
 // COMPONENTS
 import ItemModal from '../Modal/Modal'
 
-const URL = "http://127.0.0.1:8080" 
 const parameters = {
   method: 'GET', // *GET, POST, PUT, DELETE, etc.
   mode: 'cors', // no-cors, *cors, same-origin
@@ -19,11 +19,11 @@ const parameters = {
   }
 }
 
-
 export default function Main() {
     const [itemData, setItemData] = useRecoilState(items);
     const [modalShow, setModalShow] = useState(false);
     const [modalData, setModalData] = useState({});
+    const [showItemCount, setShowItemCount] = useState(64);
 
     useEffect(() => {
         fetch(URL, parameters)
@@ -81,12 +81,23 @@ export default function Main() {
                             />
                         </Form.Group>
                     </Row>
+                    <Row className="justify-items-end">
+                        <Col md={11}></Col>
+                        <Col md={1}>
+                            <select value={showItemCount} onChange={e => setShowItemCount(e.target.value)} className="form-select" aria-label="Default select example">
+                                <option value="24">24</option>
+                                <option value="64">64</option>
+                                <option value="128">128</option>
+                                <option value="256">256</option>
+                            </select>
+                        </Col>
+                    </Row>
                 </Form>
             </Container>
             <hr/>
             <ItemModal  show={modalShow} data={modalData} close={closeModal}></ItemModal>
             <Container fluid className="d-flex flex-wrap justify-content-around mt-2" >
-                {Object.keys(itemData).slice(0, 500).map((item, index) => (
+                {Object.keys(itemData).slice(0, showItemCount).map((item, index) => (
                     <Card onClick={() => openModal(item)} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
                         <Card.Body>
                         <Card.Title>{item}</Card.Title>
