@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const items = atom({
     key: 'items',
-    default: []
+    default: {}
   })
 export const dates = atom({
     key: 'dates',

@@ -15,27 +15,58 @@ const parameters = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': '*'
-    // 'Content-Type': 'application/x-www-form-urlencoded',
   }
 }
 
 export default function Main() {
-    const [itemData, setItemData] = useRecoilState(items);
+    const [products, setProducts] = useState({});
     const [modalShow, setModalShow] = useState(false);
     const [modalData, setModalData] = useState({});
     const [showItemCount, setShowItemCount] = useState(64);
+    const [dates, setDates] = useState([])
 
     useEffect(() => {
-        fetch(URL, parameters)
-        .then(res => res.json())
-        .then((result) => {
-            setItemData(result[1]);
-            //setDatesData(result[0]);
-        }, 
-        (error) => {
-            console.log(error)
-        });
-    });
+        fetchProducts()
+    }, [products]);
+
+    useEffect(() => {
+        fetchDates()
+    }, [dates]);
+    // const orderProductsByName = async (date) => {
+    //     try {
+    //         const data = await fetch(URL + "/prices/" + date.replaceAll("'", ""), parameters)
+    //         const json = await data.json()
+    //         let normalized = dates
+    //         json.map(item => { 
+    //             let key = item[1]
+    //             if (item[3] == "selver") {
+    //                 key = `${item[0]}, ${item[1]}`
+    //             }
+    //             if (!(key in itemData)) {
+    //                 setItemData({ [normalized[key]] :  {"id": item[0], "name": item[1], "price": item[2], "shop": item[3], "discount": item[4]}})
+    //             }
+    //         });
+    //         console.log(Object.keys(itemData).length)
+    //     } catch (e){
+    //         if(e instanceof TypeError) {
+    //             console.log(e)
+    //         } else {
+    //             console.log(e)
+    //         }
+    //     }
+    // }
+
+
+    const fetchDates = async () => {
+        const response = await fetch(URL, parameters);
+        const json = await response.json()
+        setDates(json)
+    }
+    const fetchProducts = async () => {
+        const response = await fetch(URL + "/products", parameters);
+        const json = await response.json()
+        setProducts(json)
+    }
 
     const openModal = (name) => {
         setModalData({itemname: name})
@@ -45,6 +76,8 @@ export default function Main() {
     const closeModal = () => {
         setModalShow(false)
     }
+
+
 
     return (
         <div>
@@ -97,11 +130,11 @@ export default function Main() {
             <hr/>
             <ItemModal  show={modalShow} data={modalData} close={closeModal}></ItemModal>
             <Container fluid className="d-flex flex-wrap justify-content-around mt-2" >
-                {Object.keys(itemData).slice(0, showItemCount).map((item, index) => (
+                {Object.keys(products).slice(0, showItemCount).map((item, index) => (
                     <Card onClick={() => openModal(item)} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
                         <Card.Body>
                         <Card.Title>{item}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted text-capitalize">{itemData[item]['shop']}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
                         </Card.Body>
                     </Card>
                 ))}
