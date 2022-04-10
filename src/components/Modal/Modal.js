@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { URL } from '../../credentials'
 import { Modal, Button } from 'react-bootstrap';
 
-const URL = "http://127.0.0.1:8080"
 const parameters = {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin

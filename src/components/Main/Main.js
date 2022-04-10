@@ -3,10 +3,14 @@ import { useRecoilState } from 'recoil';
 import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
 import { items } from '../store/index'
-// import { URL } from '../../credentials'
+import { URL } from '../../credentials'
 // COMPONENTS
+
 import ItemModal from '../Modal/Modal'
-const URL = "http://127.0.0.1:8080"
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+
+
 const parameters = {
   method: 'GET', // *GET, POST, PUT, DELETE, etc.
   mode: 'cors', // no-cors, *cors, same-origin
@@ -68,19 +72,13 @@ export default function Main() {
 
     return (
         <div>
+            <Header />
             <Container className="mt-5">
                 <Form>
                     <Row>
                         <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
                             <Form.Control placeholder="Enter a name..." />
-                            <Form.Text className="text-muted">
-                            </Form.Text>
-                        </Form.Group>
-
-                        <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Price</Form.Label>
-                            <Form.Control placeholder="Enter price..." />
                             <Form.Text className="text-muted">
                             </Form.Text>
                         </Form.Group>
@@ -91,14 +89,6 @@ export default function Main() {
                             <Form.Control placeholder="Enter a shop..." />
                             <Form.Text className="text-muted">
                             </Form.Text>
-                        </Form.Group>
-                        <Form.Group as={Col} className="mb-3 d-flex" controlId="formBasicEmail">
-                            <Form.Check 
-                                type="switch"
-                                id="custom-switch"
-                                label="Is discount"
-                                className="align-self-end mb-2"
-                            />
                         </Form.Group>
                     </Row>
                     <Row className="justify-items-end">
@@ -127,22 +117,23 @@ export default function Main() {
                 ))}
             </Container>
             <Pagination className="justify-content-center mt-2">
-                <Pagination.First onClick={() => setPage(3)}/>
-                {page > 3 ? <Pagination.Prev onClick={() => setPage(page-1)}/> : <Pagination.Prev disabled/>}
-                {page-3 >= 3 ? <Pagination.Ellipsis disabled/> : null}
+                <Pagination.First onClick={() => setPage(1)}/>
+                {page > 1 ? <Pagination.Prev onClick={() => setPage(page-1)}/> : <Pagination.Prev disabled/>}
+                {page > 3 ? <Pagination.Ellipsis disabled/> : null}
                 {range(page - 2, page + 2).map(i => {
-                    if (i - 2 >= 1 & i <= pageCount) {
+                    if (i >= 1 & i <= pageCount) {
                         if (i == page) {
-                            return <Pagination.Item active onClick={() => setPage(i)} key={i}>{i-2}</Pagination.Item>
+                            return <Pagination.Item active onClick={() => setPage(i)} key={i}>{i}</Pagination.Item>
                         } else {
-                            return <Pagination.Item onClick={() => setPage(i)} key={i}>{i-2}</Pagination.Item>
+                            return <Pagination.Item onClick={() => setPage(i)} key={i}>{i}</Pagination.Item>
                         }
                     } 
                 })}
-                {pageCount-2 - page > 2 ? <Pagination.Ellipsis disabled/> : null}
+                {pageCount - page > 2 ? <Pagination.Ellipsis disabled/> : null}
                 {page <= pageCount-1 ? <Pagination.Next onClick={() => setPage(page+1)} /> : <Pagination.Next disabled/>}
                 <Pagination.Last onClick={() => setPage(pageCount)}/>
             </Pagination>
+            <Footer />
         </div>
     )
 }
