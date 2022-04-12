@@ -12,18 +12,14 @@ import Footer from '../Footer/Footer';
 
 
 const parameters = {
-  method: 'GET', // *GET, POST, PUT, DELETE, etc.
-  mode: 'cors', // no-cors, *cors, same-origin
-  credentials: 'same-origin', // include, *same-origin, omit
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*'
-  }
-}
-
-function range(start, end) {
-    return Array(end - start + 1).fill().map((_, idx) => start + idx)
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
+    }
 }
 
 export default function Main() {
@@ -31,38 +27,23 @@ export default function Main() {
     const [modalShow, setModalShow] = useState(false);
     const [modalItem, setModalItem] = useState({});
     const [showItemCount, setShowItemCount] = useState(64);
-    const [dates, setDates] = useState([])
-    const [pageCount, setPageCount] = useState(1)
     const [page, setPage] = useState(1)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (Object.keys(products).length == 0)
-            setPageCount(Math.ceil(Object.keys(products).length/showItemCount))
+        setLoading(true);
         fetchProducts()
-    }, [products]);
+    }, [page]);
 
-    useEffect(() => {
-        fetchDates()
-    }, [dates]);
-
-    useEffect(() => {
-        if (Object.keys(products).length != 0)
-            setPageCount(Math.ceil(Object.keys(products).length/showItemCount))
-    }, [showItemCount]);
-
-    const fetchDates = async () => {
-        const response = await fetch(URL, parameters);
-        const json = await response.json()
-        setDates(json)
-    }
     const fetchProducts = async () => {
-        const response = await fetch(URL + "/products", parameters);
+        const response = await fetch(`${URL}/products?limit=${showItemCount}&page=${page}`, parameters);
         const json = await response.json()
         setProducts(json)
+        setLoading(false);
     }
 
     const openModal = (name, id) => {
-        setModalItem({itemname: name, id: id})
+        setModalItem({ itemname: name, id: id })
         setModalShow(true)
     }
 
@@ -104,34 +85,23 @@ export default function Main() {
                     </Row>
                 </Form>
             </Container>
-            <hr/>
-            {modalShow ? <ItemModal  show={modalShow} item={modalItem} close={closeModal}></ItemModal> : null}
+            <hr />
+            {modalShow ? <ItemModal show={modalShow} item={modalItem} close={closeModal}></ItemModal> : null}
+            <div className={loading ? "loadingIcon" : "hidden"}></div>
             <Container fluid className="d-flex flex-wrap justify-content-around mt-2" >
-                {Object.keys(products).slice(showItemCount*(page-1), showItemCount * page).map((item, index) => (
+                {Object.keys(products).map((item, index) => (
                     <Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
                         <Card.Body>
-                        <Card.Title>{products[item]["name"]}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
+                            <Card.Title>{products[item]["name"]}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
                         </Card.Body>
                     </Card>
                 ))}
             </Container>
             <Pagination className="justify-content-center mt-2">
-                <Pagination.First onClick={() => setPage(1)}/>
-                {page > 1 ? <Pagination.Prev onClick={() => setPage(page-1)}/> : <Pagination.Prev disabled/>}
-                {page > 3 ? <Pagination.Ellipsis disabled/> : null}
-                {range(page - 2, page + 2).map(i => {
-                    if (i >= 1 & i <= pageCount) {
-                        if (i == page) {
-                            return <Pagination.Item active onClick={() => setPage(i)} key={i}>{i}</Pagination.Item>
-                        } else {
-                            return <Pagination.Item onClick={() => setPage(i)} key={i}>{i}</Pagination.Item>
-                        }
-                    } 
-                })}
-                {pageCount - page > 2 ? <Pagination.Ellipsis disabled/> : null}
-                {page <= pageCount-1 ? <Pagination.Next onClick={() => setPage(page+1)} /> : <Pagination.Next disabled/>}
-                <Pagination.Last onClick={() => setPage(pageCount)}/>
+                {page > 1 ? <Pagination.Prev onClick={() => setPage(page - 1)} /> : <Pagination.Prev disabled></Pagination.Prev>}
+                <Pagination.Item active>{page}</Pagination.Item>
+                <Pagination.Next onClick={() => setPage(page + 1)} />
             </Pagination>
             <Footer />
         </div>

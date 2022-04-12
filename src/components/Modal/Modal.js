@@ -7,11 +7,11 @@ const parameters = {
     mode: 'cors', // no-cors, *cors, same-origin
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
     }
-  }
+}
 
 export class ItemModal extends Component {
     constructor(props) {
@@ -21,35 +21,16 @@ export class ItemModal extends Component {
         }
     }
 
-    
+
     componentDidMount() {
         this.fetchProductPrice(this.props.item.id, this.props.item.itemname)
     }
 
     async fetchProductPrice(id, name) {
-        const response = await fetch(URL + `/products/${name}/${id}`, parameters);
+        const response = await fetch(URL + `/products/${id}`, parameters);
         const json = await response.json()
-        const data = {plotData: json[name].map((index, item) => ({y: index, x: item}))}
-        this.renderChart(data.plotData)
-    }
-
-    renderChart(data) {
-        new Chart("chart", {
-            type: "scatter",
-            data: {
-                datasets: [{
-                pointRadius: 4,
-                pointBackgroundColor: "rgba(0,0,255,1)",
-                data: data
-                }]
-            },
-            scales: {
-                y: {
-                    max: 80,
-                    min: 20
-                }
-            }
-        });
+        const data = { plotData: json[name].map((index, item) => ({ y: index, x: item })) }
+        console.log(data)
     }
 
     render() {
@@ -60,7 +41,6 @@ export class ItemModal extends Component {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <canvas id="chart"></canvas>
                 </Modal.Body>
 
                 <Modal.Footer>
