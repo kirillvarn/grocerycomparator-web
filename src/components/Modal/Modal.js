@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState }  from 'react';
 import { URL } from '../../credentials'
 import { Modal, Button } from 'react-bootstrap';
 
@@ -13,43 +13,38 @@ const parameters = {
     }
 }
 
-export class ItemModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            plotData: []
-        }
-    }
+export default function ItemModal(props) {
+    const [plotData, setPlotData] = useState([])
+    const [priceList, setPriceList] = useState([])
 
+    useEffect(() => {
+        fetchProductPrice(props.item.id, props.item.itemname)
+    })
+    useEffect(() => {
+        const list = plotData.map((index, item) => <h1 key={index}>{item[index]}</h1>);
+        setPriceList(list)
+    }, [plotData])
 
-    componentDidMount() {
-        this.fetchProductPrice(this.props.item.id, this.props.item.itemname)
-    }
-
-    async fetchProductPrice(id, name) {
+    const fetchProductPrice = async (id, name) => {
         const response = await fetch(URL + `/products/${id}`, parameters);
         const json = await response.json()
-        const data = { plotData: json[name].map((index, item) => ({ y: index, x: item })) }
-        console.log(data)
+        const data = json[name]
+        setPlotData(data)
     }
 
-    render() {
-        return (
-            <Modal fullscreen={true} show={this.props.show} onHide={this.props.close}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{this.props.item.itemname}</Modal.Title>
-                </Modal.Header>
+    return (
+        <Modal fullscreen={true} show={props.show} onHide={props.close}>
+            <Modal.Header closeButton>
+                <Modal.Title>{props.item.itemname}</Modal.Title>
+            </Modal.Header>
 
-                <Modal.Body>
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={this.props.close}>Close</Button>
-                    <Button variant="primary">Save changes</Button>
-                </Modal.Footer>
-            </Modal>
-        )
-    }
+            <Modal.Body>
+                {priceList}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={props.close}>Close</Button>
+                <Button variant="primary">Save changes</Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
-
-export default ItemModal
