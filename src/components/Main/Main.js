@@ -4,6 +4,7 @@ import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
 import { items } from '../store/index'
 import { URL } from '../../credentials'
+
 // COMPONENTS
 
 import ItemModal from '../Modal/Modal'

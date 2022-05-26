@@ -1,7 +1,7 @@
 {
   "name": "grocerycomp",
   "version": "0.1.0",
-  "homepage": "https://kirillvarn.github.io/grocerycomp",
+  "homepage": "https://kirillvarn.github.io/grocerycomparator-web",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
