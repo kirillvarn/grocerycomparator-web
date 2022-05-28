@@ -20,7 +20,7 @@ function App() {
       <Router>
         <Routes>
             <Route exact path="/stat" element={<MainStat/>}/>
-            <Route exact path="/" element={<Main/>}/>
+            <Route exact path="/grocerycomparator-web" element={<Main/>}/>
         </Routes>
       </Router>
     </div>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil';
 import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
-import { items } from '../store/index'
 import { URL } from '../../credentials'
 
 // COMPONENTS
