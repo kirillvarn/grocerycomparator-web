@@ -4,6 +4,7 @@ import { RecoilRoot, useRecoilState } from 'recoil';
 
 import Main from '../Main/Main';
 import MainStat from "../Statistics/MainStat"
+import MainAdmin from "../Admin/Main/MainAdmin";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       </RecoilRoot>
       <Router>
         <Routes>
-            <Route exact path="/stat" element={<MainStat/>}/>
+            <Route exact path="/grocerycomparator-web/stat" element={<MainStat/>}/>
+            <Route exact path="/grocerycomparator-web/admin" element={<MainAdmin/>}/>
             <Route exact path="/grocerycomparator-web" element={<Main/>}/>
         </Routes>
       </Router>

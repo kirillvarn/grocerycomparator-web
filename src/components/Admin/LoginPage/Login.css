@@ -1,0 +1,16 @@
+.login_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.login_container > Form {
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.24);
+    border-radius: 14px;
+    padding: 3rem;
+}
+.login_btn {
+    margin-top: 24px;
+    float: right;
+}

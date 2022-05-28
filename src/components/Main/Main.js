@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
-import { URL } from '../../credentials'
+import { config } from '../../credentials'
 
 // COMPONENTS
 
@@ -9,6 +9,7 @@ import ItemModal from '../Modal/Modal'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
+const URL = config.API;
 
 const parameters = {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.

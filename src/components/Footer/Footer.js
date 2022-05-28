@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import "./Footer.css"
 
 export class Footer extends Component {
   render() {
-    return <div></div>;
+    return (<div className="footer">
+      <a className="footer_item" href="https://github.com/kirillvarn/grocerycomparator-web">GitHub</a>
+      <p className="footer_item">Kirill Varnatšov</p>
+    </div>);
   }
 }
 

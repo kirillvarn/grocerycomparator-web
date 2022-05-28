@@ -1,0 +1,15 @@
+.footer {
+    padding: 24px 44px;
+    padding-top: 44px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(249, 249, 249);
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+a.footer_item {
+    text-decoration: none;
+}
+a.footer_item:hover {
+    filter: brightness(0.8);
+}

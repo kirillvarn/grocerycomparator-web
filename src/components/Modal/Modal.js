@@ -1,6 +1,8 @@
 import React, { useEffect, useState }  from 'react';
-import { URL } from '../../credentials'
+import { config } from '../../credentials'
 import { Modal, Button } from 'react-bootstrap';
+
+const URL = config.API;
 
 const parameters = {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
