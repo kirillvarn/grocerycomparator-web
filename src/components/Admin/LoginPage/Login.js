@@ -4,16 +4,19 @@ import "./Login.css";
 
 import { config } from '../../../credentials';
 
-const repo = config.Repo['Full-access'];
+import Error from '../../Error/Error';
+
 const URL = config.API;
 
-function Login() {
+function Login(props) {
+    const [loginResponse, setLoginResponse] = useState({});
+    const [error, setError] = useState("");
     const login = (event) => {
         event.preventDefault();
         const username = event.target[0].value;
         const password = event.target[1].value;
         const keepalive = event.target[2].checked;
-        const data ={ "username": username, "password": password, "keep_logged": keepalive }
+        const data = { "username": username, "password": password, "keep_logged": keepalive }
         fetch(`${URL}/user`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +30,7 @@ function Login() {
                 if (response.ok) {
                     response.json()
                         .then(function (response) {
-                            console.log(response);
+                            setLoginResponse(response)
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -41,7 +44,19 @@ function Login() {
                 console.log(error);
             });
     }
+
+    useEffect(() => {
+        if (loginResponse.response && loginResponse.response.status == 'error') {
+            setError(loginResponse['response']['message']);
+        } else if (loginResponse.response && loginResponse.response.status == 'ok') {
+            props.loginResponse(true);
+        } else {
+            setError(null);
+        }
+    }, [loginResponse])
+
     return (<div className="login_container">
+        {error ? <Error message={error} /> : null}
         <form onSubmit={login}>
             <Form.Group controlId="username">
                 <Form.Label>Username</Form.Label>
