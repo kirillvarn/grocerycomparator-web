@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 
 import { config } from '../../../credentials';
+import * as Helper from '../../Helpers.js';
 
 // Components
 import Status from './Status';
+import Error from '../../Error/Error'
+
 const URL = config.API;
+const PARSE_KEY = config.PARSE_TOKEN;
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export default function Panel() {
   const [serverStatus, setServerStatus] = useState('OK');
   const [lastDate, setLastDate] = useState(0);
   const [dateArray, setDateArray] = useState([]);
+  const [error, setError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const timeoutChecker = () => {
     checkServer();
-    setTimeout(timeoutChecker, 10 * 1000);
+    setTimeout(timeoutChecker, 300 * 1000);
   }
 
   const getLastDate = () => {
@@ -26,17 +33,15 @@ export default function Panel() {
               .then(
                 (resp) => {
                   const dateArray = resp.filter((e) => e !== 'initial_products' && e !== 'updatedates')
+                  let dateDict = new Object();
                   const maxDateArray =
                     dateArray.map(element => {
                       if (element !== 'initial_products' && element !== 'updatedates') {
-                        return new Date(element)
+                        dateDict[element] = new Date(element);
                       };
                     });
-                  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                  setDateArray(maxDateArray.map(date => {
-                    date.toLocaleDateString('en-US', options)
-                  }));
-                  var maxDate = new Date(Math.max.apply(null, maxDateArray));
+                  setDateArray(dateDict);
+                  var maxDate = new Date(Math.max.apply(null, Object.values(dateDict)));
                   setLastDate(maxDate.toLocaleDateString('en-US', options));
                 }
               )
@@ -60,6 +65,30 @@ export default function Panel() {
         });
   }
 
+  const startParsing = () => {
+    fetch(`${URL}/parse`, {
+      headers: {
+        'Content-Type': 'text/html',
+        'Authentication': PARSE_KEY
+      },
+      method: 'POST',
+      mode: 'cors',
+      body: ""
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        const is_error = Helper.validateError(resp);
+        is_error ? setError(resp.response.message) : setError(false);
+        setTimeout(setError, 3000, false);
+      })
+      .catch((error) => {
+        setError("Something went wrong!")
+        setTimeout(setError, 3000, false);
+      })
+  }
+
   useEffect(
     () => {
       timeoutChecker();
@@ -68,18 +97,53 @@ export default function Panel() {
 
   return (
     <Container className="panel_container">
+      {error ? <Error message={error} /> : null}
+      <Modal className="h-75 mt-4 p-4" centered scrollable show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Full list of parse dates!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <table className="table" id="fullListTable">
+            <thead>
+              <tr>
+                <th>Table name</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(dateArray).map((item) => {
+                return (
+                  <tr>
+                    <td>{item[0]}</td>
+                    <td>{item[1].toLocaleDateString('en-US', options)}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Row>
         <Col>
           <Status status={serverStatus} />
         </Col>
-        <Row>
-          <Col className="card">
-            <h1>Last parsed date:</h1>
-            <h1>{lastDate}</h1>
-            <a id="date-full-list">Full list</a>
-          </Col>
-          <Col className="card"></Col>
-        </Row>
+      </Row>
+      <Row>
+        <Col className="card">
+          <h1>Last parsed date:</h1>
+          <h1>{lastDate}</h1>
+          <a id="date-full-list" onClick={() => setShowModal(true)}>Full list</a>
+        </Col>
+        <Col className="card center-flex">
+          <form onSubmit={startParsing} action="#">
+            <Button variant='outline-dark' size='lg' type="submit">Start parsing</Button>
+          </form>
+        </Col>
       </Row>
     </Container>
   )

@@ -17,3 +17,26 @@ code {
   --ok-color: rgb(135, 212, 135);;
   --warning-color: rgb(202, 185, 88);
 }
+
+
+.table {
+  border-collapse: collapse;
+}
+
+.table td, .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table td {
+  padding: 4px 8px!important;
+}
+
+.table tr:hover {background-color: #ddd;}
+
+.table thead {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: lef;
+  color: black;
+}

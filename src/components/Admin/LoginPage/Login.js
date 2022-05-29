@@ -11,6 +11,7 @@ const URL = config.API;
 function Login(props) {
     const [loginResponse, setLoginResponse] = useState({});
     const [error, setError] = useState("");
+
     const login = (event) => {
         event.preventDefault();
         const username = event.target[0].value;
@@ -33,15 +34,15 @@ function Login(props) {
                             setLoginResponse(response)
                         })
                         .catch(function (error) {
-                            console.log(error);
+                            setError("Something wrong on the server-side.")
                         });
                 }
                 else {
-                    throw Error('Something went wrong');
+                    setError("Something wrong on the server-side.")
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                setError("Something wrong on the server-side.")
             });
     }
 
@@ -69,7 +70,7 @@ function Login(props) {
             <Form.Group controlId="keep_logged">
                 <Form.Check name="keep_logged" type="checkbox" label="Remember me!" />
             </Form.Group>
-            <Button className="login_btn" variant="primary" type="submit">
+            <Button className="login_btn" variant="dark" type="submit">
                 Login
             </Button>
         </form>
