@@ -1,0 +1,41 @@
+
+.panel_container {
+    margin-top: 10%;
+}
+
+
+/* Status component styles */
+
+.card.status-ok{
+    border-bottom: 8px solid var(--ok-color);
+}
+
+.card.status-error{
+    border-bottom: 8px solid var(--error-color);
+}
+
+div.col {
+    box-shadow: 0 0 2px 1px rgba(0,0,0,0.05);
+    padding: 0;
+    margin: 0.7rem;
+    border-radius: 4px;
+}
+
+div.card {
+    padding: 2rem;
+}
+
+#date-full-list {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    color: rgb(79, 122, 216);
+    cursor: pointer;
+    transition: transform 400ms ease-out;
+}
+
+#date-full-list:hover {
+    transition: transform 400ms ease-out;
+    filter:brightness(1.2);
+    transform: scale(1.1);
+}
