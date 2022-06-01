@@ -19,6 +19,7 @@ export default function Panel() {
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+
   const timeoutChecker = () => {
     checkServer();
     setTimeout(timeoutChecker, 300 * 1000);
@@ -71,6 +72,16 @@ export default function Panel() {
       getLastDate();
     }, [])
 
+  useEffect(() => {
+        if (props.status === 'OK') {
+            setClassName("card status-ok");
+            setMsg("Server is running!");
+        } else {
+            setClassName("card status-error");
+            setMsg("Server is down!");
+        }
+  }, [serverStatus])
+	
   return (
     <Container className="panel_container">
       {error ? <Error message={error} /> : null}
@@ -94,7 +105,7 @@ export default function Panel() {
                     <td>{item[1].toLocaleDateString('en-US', options)}</td>
                   </tr>
                 )
-              })}
+	      })}
             </tbody>
           </table>
         </Modal.Body>
@@ -105,7 +116,7 @@ export default function Panel() {
         </Modal.Footer>
       </Modal>
       <Row>
-        <Col>
+	<Col className="card">
           <Status status={serverStatus} />
         </Col>
       </Row>
