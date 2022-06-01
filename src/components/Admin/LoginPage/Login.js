@@ -15,7 +15,10 @@ function Login(props) {
     const login = (event) => {
         event.preventDefault();
         const username = event.target[0].value;
-        const password = event.target[1].value;
+        let password = event.target[1].value;
+        var md5 = require('blueimp-md5');
+        password = md5(password + config.SALT);
+
         const keepalive = event.target[2].checked;
         const data = { "username": username, "password": password, "keep_logged": keepalive }
         fetch(`${URL}/user`, {

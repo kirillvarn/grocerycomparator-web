@@ -65,30 +65,6 @@ export default function Panel() {
         });
   }
 
-  const startParsing = () => {
-    fetch(`${URL}/parse`, {
-      headers: {
-        'Content-Type': 'text/html',
-        'Authentication': PARSE_KEY
-      },
-      method: 'POST',
-      mode: 'cors',
-      body: ""
-    })
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((resp) => {
-        const is_error = Helper.validateError(resp);
-        is_error ? setError(resp.response.message) : setError(false);
-        setTimeout(setError, 3000, false);
-      })
-      .catch((error) => {
-        setError("Something went wrong!")
-        setTimeout(setError, 3000, false);
-      })
-  }
-
   useEffect(
     () => {
       timeoutChecker();
@@ -140,9 +116,6 @@ export default function Panel() {
           <a id="date-full-list" onClick={() => setShowModal(true)}>Full list</a>
         </Col>
         <Col className="card center-flex">
-          <form onSubmit={startParsing} action="#">
-            <Button variant='outline-dark' size='lg' type="submit">Start parsing</Button>
-          </form>
         </Col>
       </Row>
     </Container>
