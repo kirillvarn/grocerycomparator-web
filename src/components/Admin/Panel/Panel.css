@@ -16,13 +16,7 @@
 
 div.col {
     box-shadow: 0 0 2px 1px rgba(0,0,0,0.05);
-    padding: 0;
-    margin: 0.7rem;
     border-radius: 4px;
-}
-
-div.card {
-    padding: 2rem;
 }
 
 #date-full-list {

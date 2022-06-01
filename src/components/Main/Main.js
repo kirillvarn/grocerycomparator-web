@@ -88,7 +88,7 @@ export default function Main() {
             <hr />
             {modalShow ? <ItemModal show={modalShow} item={modalItem} close={closeModal}></ItemModal> : null}
             <div className={loading ? "loadingIcon" : "hidden"}></div>
-            <Container fluid className="d-flex flex-wrap justify-content-around mt-2" >
+	    <Container fluid className="d-flex flex-wrap justify-content-around mt-2" style={{minHeight: '50vh'}} >
                 {Object.keys(products).map((item, index) => {
                     return( <Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
                         <Card.Body>
@@ -102,7 +102,9 @@ export default function Main() {
             <Pagination className="justify-content-center mt-2">
                 {page > 1 ? <Pagination.Prev onClick={() => setPage(page - 1)} /> : <Pagination.Prev disabled></Pagination.Prev>}
                 <Pagination.Item active>{page}</Pagination.Item>
-                {page == totalPages ? <Pagination.Next disabled/> : <Pagination.Next onClick={() => setPage(page + 1)} />}
+	    	{page != totalPages ? <Pagination.Ellipsis disabled/> : null}
+	    	{page != totalPages ? <Pagination.Item onClick={() => setPage(totalPages)}> {totalPages} </Pagination.Item> : null}
+	    	{page == totalPages ? <Pagination.Next disabled/> : <Pagination.Next onClick={() => setPage(page + 1)} />}
             </Pagination>
             <Footer />
         </div>
