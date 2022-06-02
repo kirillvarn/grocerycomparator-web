@@ -20,9 +20,11 @@ function App() {
       </RecoilRoot>
       <Router>
         <Routes>
-            <Route exact path="/grocerycomparator-web/stat" element={<MainStat/>}/>
-            <Route exact path="/grocerycomparator-web/admin" element={<MainAdmin/>}/>
-            <Route exact path="/grocerycomparator-web" element={<Main/>}/>
+            <Route path="/grocerycomparator-web">
+              <Route index element={<Main/>}/>
+              <Route path="stat" element={<MainStat/>}/>
+              <Route path="admin" element={<MainAdmin/>}/>
+            </Route>
         </Routes>
       </Router>
     </div>
