@@ -5,6 +5,7 @@ import "./Login.css";
 import { config } from '../../../credentials';
 
 import Error from '../../Error/Error';
+import Back from '../../Back/Back';
 
 const URL = config.API;
 
@@ -60,6 +61,7 @@ function Login(props) {
     }, [loginResponse])
 
     return (<div className="login_container">
+        <Back/>
         {error ? <Error message={error} /> : null}
         <form onSubmit={login}>
             <Form.Group controlId="username">

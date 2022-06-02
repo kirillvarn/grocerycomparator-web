@@ -41,3 +41,7 @@ div.col {
 .overflow-hidden {
     overflow: scroll;
 }
+
+.panel_container  * {
+    margin: 12px;
+}

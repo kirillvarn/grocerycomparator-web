@@ -7,6 +7,7 @@ import * as Helper from '../../Helpers.js';
 // Components
 import Status from './Status';
 import Error from '../../Error/Error'
+import Back from '../../Back/Back';
 
 const URL = config.API;
 const PARSE_KEY = config.PARSE_TOKEN;
@@ -18,6 +19,8 @@ export default function Panel() {
   const [dateArray, setDateArray] = useState([]);
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [statusClass, setStatusClass] = useState("card status-ok")
+  const [statusMsg, setStatusMsg] = useState("")
 
 
   const timeoutChecker = () => {
@@ -73,17 +76,18 @@ export default function Panel() {
     }, [])
 
   useEffect(() => {
-        if (props.status === 'OK') {
-            setClassName("card status-ok");
-            setMsg("Server is running!");
+        if (serverStatus === 'OK') {
+            setStatusClass("card status-ok");
+            setStatusMsg("Server is running!");
         } else {
-            setClassName("card status-error");
-            setMsg("Server is down!");
+            setStatusClass("card status-error");
+            setStatusMsg("Server is down!");
         }
   }, [serverStatus])
-	
+
   return (
-    <Container className="panel_container">
+    <div>
+      <Back/>
       {error ? <Error message={error} /> : null}
       <Modal className="h-75 mt-4 p-4" centered scrollable show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
@@ -115,9 +119,10 @@ export default function Panel() {
           </Button>
         </Modal.Footer>
       </Modal>
+    <Container className="panel_container">
       <Row>
-	<Col className="card">
-          <Status status={serverStatus} />
+	<Col className={statusClass}>
+	  <h1>{statusMsg}</h1>
         </Col>
       </Row>
       <Row>
@@ -130,5 +135,6 @@ export default function Panel() {
         </Col>
       </Row>
     </Container>
+   </div>
   )
 }
