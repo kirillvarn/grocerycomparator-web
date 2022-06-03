@@ -63,13 +63,13 @@ export default function Main() {
                     <Row>
                         <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control onChange={e => setSearchString(e.target.value)} placeholder="Enter a name..." />
+                            <Form.Control className="mb-2" onChange={e => setSearchString(e.target.value)} placeholder="Enter a name..." />
                         </Form.Group>
                     </Row>
                     <Row>
                         <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Shop</Form.Label>
-                            <Form.Control onChange={e => setShopString(e.target.value)} placeholder="Enter a shop..." />
+                            <Form.Control className="mb-2" onChange={e => setShopString(e.target.value)} placeholder="Enter a shop..." />
                         </Form.Group>
                     </Row>
                     <Row className="justify-items-end">

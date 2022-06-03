@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { RecoilRoot, useRecoilState } from 'recoil';
 
 
@@ -18,13 +18,11 @@ function App() {
         />
 
       </RecoilRoot>
-      <Router>
+      <Router basename="/">
         <Routes>
-            <Route path="/grocerycomparator-web">
-              <Route index element={<Main/>}/>
-              <Route path="stat" element={<MainStat/>}/>
-              <Route path="admin" element={<MainAdmin/>}/>
-            </Route>
+          <Route exact path="/" element={<Main />} />
+          <Route path="/stat" element={<MainStat />} />
+          <Route path="/admin" element={<MainAdmin />} />
         </Routes>
       </Router>
     </div>

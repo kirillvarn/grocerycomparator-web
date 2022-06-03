@@ -1,24 +1,36 @@
-import React, { Component } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Navbar, Container } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
+
+import "./Header.css";
 
 
-export class Header extends Component {
-  render() {
-    return(
-        <div>
-          <Navbar bg="dark" variant="dark">
-              <Container>
-                <Navbar.Brand href="/">Home</Navbar.Brand>
-                <Nav className="me-auto">
-                <Nav.Link href="grocerycomparator-web/stat">Stats</Nav.Link>
-                <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
-                </Nav>
-              </Container>
-          </Navbar>
-        </div>
-    )
+function Header() {
+  const location = useLocation();
+  const getClassName = (path) => {
+    if(path === "") {
+      return "header-active"
+    }
+    if(location.pathname == path) {
+      return "header-active"
+    }
+    return ""
   }
+  return (
+    <div style={{borderBottom: "4px solid black"}}>
+      <Navbar bg="dark" variant="dark">
+        <Container className="header_container">
+          <div>
+            <Link className={getClassName("/")} to="/">Main</Link>
+            <Link className={getClassName("/stat")} to="/stat">Stats</Link>
+          </div>
+          <div>
+            <Link to="/admin">Admin panel</Link>
+          </div>
+        </Container>
+      </Navbar>
+    </div>
+  )
 }
 
 export default Header;

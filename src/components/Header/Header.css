@@ -1,0 +1,24 @@
+.header_container {
+    padding: 24px;
+}
+
+.header_container a{
+    padding: 24px;
+    text-decoration: none;
+    font-variant: small-caps;
+    transition: background-color 300ms ease-out;
+    color: white;
+}
+.header_container a:hover{
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    transition: background-color 400ms ease-out;
+}
+
+.navbar {
+    padding: 0!important;
+}
+
+.header-active {
+    border-bottom: 3px solid white;
+}
