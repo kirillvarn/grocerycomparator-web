@@ -38,12 +38,12 @@ export default function Panel() {
                 (resp) => {
                   const dateArray = resp.filter((e) => e !== 'initial_products' && e !== 'updatedates')
                   let dateDict = new Object();
-                  const maxDateArray =
-                    dateArray.map(element => {
-                      if (element !== 'initial_products' && element !== 'updatedates') {
-                        dateDict[element] = new Date(element);
-                      };
-                    });
+                  dateDict['2022-03-06 (initial)'] = new Date('2022-03-06');
+                  dateArray.map(element => {
+                    if (element !== 'initial_products' && element !== 'updatedates') {
+                      dateDict[element] = new Date(element);
+                    };
+                  });
                   setDateArray(dateDict);
                   var maxDate = new Date(Math.max.apply(null, Object.values(dateDict)));
                   setLastDate(maxDate.toLocaleDateString('en-US', options));

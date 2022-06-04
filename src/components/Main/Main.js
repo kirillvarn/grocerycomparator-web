@@ -102,9 +102,9 @@ export default function Main() {
             <Pagination className="justify-content-center mt-2">
                 {page > 1 ? <Pagination.Prev onClick={() => setPage(page - 1)} /> : <Pagination.Prev disabled></Pagination.Prev>}
                 <Pagination.Item active>{page}</Pagination.Item>
-	    	{page != totalPages ? <Pagination.Ellipsis disabled/> : null}
-	    	{page != totalPages ? <Pagination.Item onClick={() => setPage(totalPages)}> {totalPages} </Pagination.Item> : null}
-	    	{page == totalPages ? <Pagination.Next disabled/> : <Pagination.Next onClick={() => setPage(page + 1)} />}
+	    	{page != totalPages + 1 && totalPages != 0 ? <Pagination.Ellipsis disabled/> : null}
+	    	{page != totalPages + 1 && totalPages != 0 ? <Pagination.Item onClick={() => setPage(totalPages+1)}> {totalPages+1} </Pagination.Item> : null}
+	    	{page == totalPages + 1 ? <Pagination.Next disabled/> : <Pagination.Next onClick={() => setPage(page + 1)} />}
             </Pagination>
             <Footer />
         </div>
