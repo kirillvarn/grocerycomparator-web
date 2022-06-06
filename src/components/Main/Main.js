@@ -95,6 +95,9 @@ export default function Main() {
                             <Card.Title>{products[item]["name"]}</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
                         </Card.Body>
+                        <Card.Footer>
+                            <small className="text-muted font-weight-bold"> Price: {Math.round(products[item]['price'] * 100)/100}&euro;</small>
+                        </Card.Footer>
                     </Card>
                     )}
                 )}

@@ -20,6 +20,7 @@ const parameters = {
 export default function ItemModal(props) {
     const [priceList, setPriceList] = useState({})
     const [name, setName] = useState("")
+    const [totalDelta, setTotalDelta] = useState(0)
 
     useEffect(() => {
         fetchProductPrice(props.item.id)
@@ -30,7 +31,8 @@ export default function ItemModal(props) {
     }, [priceList])
 
     const fetchProductPrice = async (id) => {
-        const response = await fetch(URL + `/products/${id}`, parameters);
+        const null_q = (props.item.id === props.item.itemname) ? "?null_id=true" : ""
+        const response = await fetch(URL + `/products/${id}${null_q}`, parameters);
         const json = await response.json()
         const key = Object.keys(json)
         const prices = json[key]
@@ -39,8 +41,23 @@ export default function ItemModal(props) {
     }
 
     const getPriceChanges = () => {
-        
-        console.log(priceList)
+        let newPrices = new Object();
+        let total = 0;
+        // Object.keys(priceList).map((item, index) => {
+        //     let delta = 0;
+        //     if (index === 0) {
+        //         newPrices[item]['price'] = item;
+        //         priceList[item]['delta'] = 0;
+        //     }
+        //     if (index !== 0) {
+        //         delta = Math.round(1 *100)/100;
+        //         newPrices[item]['price'] = item;
+        //         priceList[item]['delta'] = delta
+        //     }
+        //     total = total + delta;
+        // })
+        // setTotalDelta(total);
+        // setPriceList(newPrices);
     }
 
     return (

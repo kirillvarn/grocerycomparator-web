@@ -4,7 +4,7 @@ import { Table as BTable } from 'react-bootstrap';
 import "./Table.css";
 
 function Table(props) {
-    const keys = Object.keys(props.data).sort().reverse();
+    const keys = Object.keys(props.data);
     return (<BTable bordered hover>
         <thead>
             <tr>
