@@ -33,11 +33,11 @@ export default function ItemModal(props) {
     const fetchProductPrice = async (id) => {
         const null_q = (props.item.id === props.item.itemname) ? "?null_id=true" : ""
         const response = await fetch(URL + `/products/${id}${null_q}`, parameters);
-        const json = await response.json()
-        const key = Object.keys(json)
-        const prices = json[key]
-        setName(key[0])
-        setPriceList(prices)
+        await response.json()
+            .then((fetched) => {
+                setName(fetched['name']);
+                setPriceList(fetched['data']);
+            });
     }
 
     const getPriceChanges = () => {
@@ -69,13 +69,10 @@ export default function ItemModal(props) {
             <Modal.Body>
                 <Row>
                     <Col>
-                        <Table data={priceList} cols={['date', 'price']} />
+                        <Table data={priceList} cols={['date', 'price', 'deviation']} />
                     </Col>
                     <Col></Col>
                 </Row>
-                {/*Object.keys(priceList).map(i => {
-                    return <div><span>{i}: {priceList[i]}</span></div>
-                })*/}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.close}>Close</Button>

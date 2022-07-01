@@ -1,16 +1,39 @@
-.error_message {
+.info_message {
     color: white;
     font-size: 1.4rem;
 }
+.error_message {
+    color: black;
+    font-size: 1.2rem;
+}
+
+.error_container_message {
+    background-color: white;
+    padding: 32px 12px;
+    margin: 0;
+    border-bottom-left-radius: 6px;
+}
+.error_container_info {
+    background-color: var(--error-color);
+    padding: 12px;
+    margin: 0;
+    border-top-left-radius: 6px;
+}
+
+[class*="error_container_"] > [class*="_message"]{
+    margin: 0;
+    padding: 0;
+}
+
 .error_container {
     position: fixed;
-    border-radius: 3px;
-    box-shadow: 0 0 2px 1px rgba(0,0,0,0.2);
-    background-color: rgb(255, 32, 32);
-    padding: 12px 24px;
+    border-radius: 6px;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.5);
+    box-shadow: 0 0 8px 2px rgba(0,0,0,0.1);
     top: 24px;
-    right: 24px;
+    right: 0px;
     animation: pop-ip 300ms ease-out 1 normal;
+    cursor: pointer;
 }
 
 @keyframes pop-ip {

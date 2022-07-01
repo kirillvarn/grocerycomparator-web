@@ -13,6 +13,11 @@ function Login(props) {
     const [loginResponse, setLoginResponse] = useState({});
     const [error, setError] = useState("");
 
+    const timeoutError = (error) => {
+        setError(error);
+        setTimeout(setError, 3000, null);
+    };
+
     const login = (event) => {
         event.preventDefault();
         const username = event.target[0].value;
@@ -31,28 +36,27 @@ function Login(props) {
             body: JSON.stringify(data)
         })
             .then(function (response) {
-
                 if (response.ok) {
                     response.json()
                         .then(function (response) {
                             setLoginResponse(response)
                         })
                         .catch(function (error) {
-                            setError("Something wrong on the server-side.")
+                            timeoutError(error && error.toString())
                         });
                 }
                 else {
-                    setError("Something wrong on the server-side.")
+                    timeoutError("")
                 }
             })
             .catch(function (error) {
-                setError("Something wrong on the server-side.")
+                timeoutError(error && error.toString())
             });
     }
 
     useEffect(() => {
         if (loginResponse.response && loginResponse.response.status == 'error') {
-            setError(loginResponse['response']['message']);
+            timeoutError(loginResponse['response']['message']);
         } else if (loginResponse.response && loginResponse.response.status == 'ok') {
             props.loginResponse(true);
         } else {
@@ -61,8 +65,8 @@ function Login(props) {
     }, [loginResponse])
 
     return (<div className="login_container">
-        <Back/>
-        {error ? <Error message={error} /> : null}
+        <Back />
+        {error ? <Error errorMsg={error} onClick={() => setError(null)} /> : null}
         <form onSubmit={login}>
             <Form.Group controlId="username">
                 <Form.Label>Username</Form.Label>
