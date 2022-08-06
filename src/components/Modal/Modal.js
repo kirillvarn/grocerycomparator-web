@@ -19,45 +19,43 @@ const parameters = {
 
 export default function ItemModal(props) {
     const [priceList, setPriceList] = useState({})
+    const [discountList, setDiscountList] = useState({})
+    const [dateList, setDateList] = useState({})
     const [name, setName] = useState("")
-    const [totalDelta, setTotalDelta] = useState(0)
+    const [showTable, setShowTable] = useState(false)
 
     useEffect(() => {
         fetchProductPrice(props.item.id)
     }, [])
 
-    useEffect(() => {
-        getPriceChanges()
-    }, [priceList])
+    // useEffect(() => {
+    //     getPriceChanges()
+    // }, [priceList])
 
     const fetchProductPrice = async (id) => {
-        const null_q = (props.item.id === props.item.itemname) ? "?null_id=true" : ""
+        const null_q = (id === props.item.itemname) ? "?null_id=true" : ""
         const response = await fetch(URL + `/products/${id}${null_q}`, parameters);
+
         await response.json()
             .then((fetched) => {
-                setName(fetched['name']);
-                setPriceList(fetched['data']);
-            });
-    }
+                console.log(fetched)
 
-    const getPriceChanges = () => {
-        let newPrices = new Object();
-        let total = 0;
-        // Object.keys(priceList).map((item, index) => {
-        //     let delta = 0;
-        //     if (index === 0) {
-        //         newPrices[item]['price'] = item;
-        //         priceList[item]['delta'] = 0;
-        //     }
-        //     if (index !== 0) {
-        //         delta = Math.round(1 *100)/100;
-        //         newPrices[item]['price'] = item;
-        //         priceList[item]['delta'] = delta
-        //     }
-        //     total = total + delta;
-        // })
-        // setTotalDelta(total);
-        // setPriceList(newPrices);
+                const name = Object.keys(fetched)[0]
+                setName(name)
+
+                const prices = Object.keys(fetched[name]).map((key, index) => {
+                    return fetched[name][key]['price']
+                })
+                const discounts = Object.keys(fetched[name]).map((key, index) => {
+                    return fetched[name][key]['discount']
+                })
+                setDateList(Object.keys(fetched[name]))
+                setPriceList(prices);
+                setDiscountList(discounts);
+            })
+            .then(() => {
+                setShowTable(true)
+            });
     }
 
     return (
@@ -69,7 +67,7 @@ export default function ItemModal(props) {
             <Modal.Body>
                 <Row>
                     <Col>
-                        <Table data={priceList} cols={['date', 'price', 'deviation']} />
+                        {showTable ? <Table data={{'prices': priceList, 'discounts': discountList, 'dates': dateList}} cols={['date', 'price', 'deviation']} /> : null}
                     </Col>
                     <Col></Col>
                 </Row>

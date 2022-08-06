@@ -4,8 +4,8 @@ import { Table as BTable } from 'react-bootstrap';
 import "./Table.css";
 
 function Table(props) {
-    const keys = Object.keys(props.data);
-
+    console.log(props.data['dates'])
+    const keys = props.data['dates']
     const calculateDeviation = (prices) => {
         const pricesLen = prices.length;
 
@@ -39,19 +39,20 @@ function Table(props) {
         }
     };
 
-    const deviations = calculateDeviation(Object.values(props.data));
+    const deviations = calculateDeviation(Object.values(props.data['prices']));
 
     return (<BTable bordered hover>
         <thead>
             <tr>
-                {props.cols.map(i => <th>{i}</th>)}
+                {props.cols.map((i, index) => <th key={index}>{i}</th>)}
             </tr>
         </thead>
         <tbody>
             {keys.map((i, index) => {
-                return (<tr>
+                const discount = props.data['discounts'][index] ? "discounted" : ""
+                return (<tr key={index} className={discount}>
                     <td>{i == 'initial_products' ? '2022-03-06' : i}</td>
-                    <td>{Math.round(props.data[i] * 100) / 100}</td>
+                    <td>{Math.round(props.data['prices'][index] * 100) / 100}</td>
                     <td style={getColorValue(deviations[index])}>{deviations[index]}{deviations.length > 1 ? "%" : ""}</td>
                 </tr>)
             })}
