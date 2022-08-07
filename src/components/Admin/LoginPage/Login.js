@@ -22,8 +22,8 @@ function Login(props) {
         event.preventDefault();
         const username = event.target[0].value;
         let password = event.target[1].value;
-        var md5 = require('blueimp-md5');
-        password = md5(password + config.SALT);
+        var sha256 = require('js-sha256');
+        password = sha256(password);
 
         const keepalive = event.target[2].checked;
         const data = { "username": username, "password": password, "keep_logged": keepalive }

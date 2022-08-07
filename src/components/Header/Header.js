@@ -17,7 +17,7 @@ function Header() {
     return ""
   }
   return (
-    <div className="shadow">
+    <div className="shadow header bg-dark">
       <Navbar bg="dark" variant="dark">
         <Container className="header_container">
           <div>

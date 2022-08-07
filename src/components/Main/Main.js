@@ -58,7 +58,7 @@ export default function Main() {
     return (
         <div className="content" style={{ backgroundColor: "#f1f1f1" }}>
             <Header />
-            <Container className="mt-2 shadow">
+            <Container className="mt-2">
                 <Form>
                     <Row style={{ alignItems: "end" }}>
                         <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
