@@ -56,11 +56,11 @@ export default function Main() {
     }
 
     return (
-        <div>
+        <div className="content" style={{ backgroundColor: "#f1f1f1" }}>
             <Header />
-            <Container className="mt-2">
+            <Container className="mt-2 shadow">
                 <Form>
-                    <Row style={{alignItems: "end"}}>
+                    <Row style={{ alignItems: "end" }}>
                         <Form.Group as={Col} className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
                             <Form.Control className="mb-2" onChange={e => setSearchString(e.target.value)} placeholder="Enter a name..." />
@@ -82,29 +82,30 @@ export default function Main() {
             </Container>
             {modalShow ? <ItemModal show={modalShow} item={modalItem} close={closeModal}></ItemModal> : null}
             <div className={loading ? "loadingIcon" : "hidden"}></div>
-	        <div className="border-top" style={{backgroundColor: "#f2f3f7"}}>
-                <Container fluid className="d-flex flex-wrap justify-content-around pt-2 w-75" style={{minHeight: '50vh'}} >
+            <div className="border-top">
+                <Container fluid className="d-flex flex-wrap justify-content-around pt-2 w-75" style={{ minHeight: '50vh' }} >
                     {Object.keys(products).map((item, index) => {
-                        return( <Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
+                        return (<Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
                             <Card.Body>
                                 <Card.Title>{products[item]["name"]}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
                             </Card.Body>
                             <Card.Footer>
-                                <small className="text-muted font-weight-bold"> Price: {Math.round(products[item]['price'] * 100)/100}&euro;</small>
+                                <small className="text-muted font-weight-bold"> Price: {Math.round(products[item]['price'] * 100) / 100}&euro;</small>
                             </Card.Footer>
                         </Card>
-                        )}
+                        )
+                    }
                     )}
                 </Container>
             </div>
-            <Pagination className="justify-content-center py-3 m-0" style={{backgroundColor: "#f2f3f7"}}>
+            {loading ? null : <Pagination className="justify-content-center py-3 m-0">
                 {page > 1 ? <Pagination.Prev onClick={() => setPage(page - 1)} /> : <Pagination.Prev disabled></Pagination.Prev>}
                 <Pagination.Item active>{page}</Pagination.Item>
-	    	{page != totalPages + 1 && totalPages != 0 ? <Pagination.Ellipsis disabled/> : null}
-	    	{page != totalPages + 1 && totalPages != 0 ? <Pagination.Item onClick={() => setPage(totalPages+1)}> {totalPages+1} </Pagination.Item> : null}
-	    	{page == totalPages + 1 ? <Pagination.Next disabled/> : <Pagination.Next onClick={() => setPage(page + 1)} />}
-            </Pagination>
+                {page != totalPages + 1 && totalPages != 0 ? <Pagination.Ellipsis disabled /> : null}
+                {page != totalPages + 1 && totalPages != 0 ? <Pagination.Item onClick={() => setPage(totalPages + 1)}> {totalPages + 1} </Pagination.Item> : null}
+                {page == totalPages + 1 ? <Pagination.Next disabled /> : <Pagination.Next onClick={() => setPage(page + 1)} />}
+            </Pagination>}
             <Footer />
         </div>
     )
