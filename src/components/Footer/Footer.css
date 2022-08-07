@@ -1,10 +1,12 @@
 .footer {
-    padding: 24px 44px;
-    padding-top: 44px;
+    padding: 16px 12px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: rgb(249, 249, 249);
     border-top: 1px solid rgb(230, 230, 230);
+    margin-top: auto;
+    padding-right: 24px;
 }
 
 a.footer_item {

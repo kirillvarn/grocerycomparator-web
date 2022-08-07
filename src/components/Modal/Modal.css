@@ -1,0 +1,17 @@
+.modal-content {
+    background-color: #f6f6f6!important;
+}
+
+.price_chart {
+    background-color: white;
+}
+
+h2 {
+    text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+}
+
+svg {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+}
+

@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,25 +18,6 @@ code {
   --warning-color: rgb(202, 185, 88);
 }
 
-
-.table {
-  border-collapse: collapse;
-}
-
-.table td, .table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.table td {
-  padding: 4px 8px!important;
-}
-
-.table tr:hover {background-color: #ddd;}
-
-.table thead {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: lef;
-  color: black;
+* {
+  font-family: 'Montserrat', sans-serif;
 }

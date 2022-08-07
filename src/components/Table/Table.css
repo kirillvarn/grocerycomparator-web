@@ -6,3 +6,22 @@ th::first-letter {
     font-weight: 300;
     color: rgb(137, 137, 137);
 }
+
+tbody {
+    border-top: none!important;
+}
+
+tbody > tr:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 0px;
+}
+
+tbody > tr {
+    background-color: white;
+}
+
+.price-table {
+    width: 101%!important;
+    margin-bottom: 0!important;
+    margin-top: -2px;
+    margin-left: -2px;
+}

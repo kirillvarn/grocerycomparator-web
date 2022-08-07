@@ -1,9 +1,10 @@
 .header_container {
     padding: 24px;
+    overflow: hidden;
 }
 
 .header_container a{
-    padding: 24px;
+    padding: 100% 24px;
     text-decoration: none;
     font-variant: small-caps;
     transition: background-color 300ms ease-out;
@@ -20,5 +21,5 @@
 }
 
 .header-active {
-    border-bottom: 3px solid white;
+    background-color: rgba(0,0,0,0.7);
 }

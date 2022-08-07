@@ -3,6 +3,8 @@ import { RecoilRoot, useRecoilState } from 'recoil';
 
 
 import Main from '../Main/Main';
+import Index from '../Index/Index';
+import Compare from '../Compare/Compare';
 import MainStat from "../Statistics/MainStat"
 import MainAdmin from "../Admin/Main/MainAdmin";
 
@@ -20,7 +22,9 @@ function App() {
       </RecoilRoot>
       <Router basename="/">
         <Routes>
-          <Route exact path="/" element={<Main />} />
+          <Route exact path="/" element={<Index />} />
+          <Route path="/list" element={<Main />} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="/stat" element={<MainStat />} />
           <Route path="/admin" element={<MainAdmin />} />
         </Routes>

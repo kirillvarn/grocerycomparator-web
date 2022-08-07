@@ -5,7 +5,7 @@ export class Footer extends Component {
   render() {
     return (<div className="footer">
       <a className="footer_item" href="https://github.com/kirillvarn/grocerycomparator-web">GitHub</a>
-      <p className="footer_item">Kirill Varnatšov</p>
+      <p className="footer_item m-0">Kirill Varnatšov</p>
     </div>);
   }
 }

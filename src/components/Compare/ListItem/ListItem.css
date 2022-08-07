@@ -1,0 +1,8 @@
+.close-btn {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  filter: brightness(0.6);
+}

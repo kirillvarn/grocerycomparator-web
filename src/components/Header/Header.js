@@ -17,11 +17,13 @@ function Header() {
     return ""
   }
   return (
-    <div style={{borderBottom: "4px solid black"}}>
+    <div className="shadow">
       <Navbar bg="dark" variant="dark">
         <Container className="header_container">
           <div>
-            <Link className={getClassName("/")} to="/">Main</Link>
+            <Link className={getClassName("/")} to="/">Index</Link>
+            <Link className={getClassName("/list")} to="/list">List</Link>
+            <Link className={getClassName("/compare")} to="/compare">Compare</Link>
             <Link className={getClassName("/stat")} to="/stat">Stats</Link>
           </div>
           <div>
