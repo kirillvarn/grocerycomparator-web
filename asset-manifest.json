@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/grocerycomparator-web/static/css/main.9ae02f41.css",
-    "main.js": "/grocerycomparator-web/static/js/main.b828cee7.js",
+    "main.js": "/grocerycomparator-web/static/js/main.5c0e6679.js",
     "static/media/Montserrat-VariableFont_wght.ttf": "/grocerycomparator-web/static/media/Montserrat-VariableFont_wght.3faa3eef13649db02044.ttf",
     "index.html": "/grocerycomparator-web/index.html",
     "main.9ae02f41.css.map": "/grocerycomparator-web/static/css/main.9ae02f41.css.map",
-    "main.b828cee7.js.map": "/grocerycomparator-web/static/js/main.b828cee7.js.map"
+    "main.5c0e6679.js.map": "/grocerycomparator-web/static/js/main.5c0e6679.js.map"
   },
   "entrypoints": [
     "static/css/main.9ae02f41.css",
-    "static/js/main.b828cee7.js"
+    "static/js/main.5c0e6679.js"
   ]
 }
