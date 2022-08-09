@@ -78,9 +78,18 @@ export default function Compare() {
                     r[a.shop].push(a);
                     return r;
                 }, Object.create(null));
-
                 setFetchedData(result)
             })
+    }
+
+    function sum(obj) {
+        var sum = 0;
+        for (var el in obj) {
+            if (obj.hasOwnProperty(el)) {
+                sum += parseFloat(obj[el].price);
+            }
+        }
+        return sum;
     }
 
     return (
@@ -147,12 +156,15 @@ export default function Compare() {
                         return <div className="p-3 rounded border shadow-sm" style={{ marginRight: "12px" }} key={index}>
                             <h3 className="text-capitalize">{item}</h3>
                             <div>
-                                {fetchedData[item].map(item => {
-                                    return <div className="d-flex justify-content-between">
+                                {fetchedData[item].map((item, index) => {
+                                    return <div key={index} className="d-flex justify-content-between">
                                         <span className={item.discount ? "text-warning" : "text-dark"} style={{ marginRight: "16px" }}>{item.name}</span>
                                         <span>{item.price}</span>
                                     </div>
                                 })}
+                                <hr />
+                                <span> Total: </span>
+                                <span> {Math.round(sum(fetchedData[item]) * 100) / 100}</span>
                             </div>
                         </div>
                     })}

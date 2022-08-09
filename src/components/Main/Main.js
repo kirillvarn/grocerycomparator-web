@@ -85,13 +85,14 @@ export default function Main() {
             <div className="border-top">
                 <Container fluid className="d-flex flex-wrap justify-content-around pt-2 w-75" style={{ minHeight: '50vh' }} >
                     {Object.keys(products).map((item, index) => {
-                        return (<Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem' }} className="mb-2 shadow-sm item-card">
+                        return (<Card onClick={() => openModal(products[item]["name"], products[item]["id"])} key={index} style={{ width: '14rem', borderColor: products[item]["discount"] ? "#ffc107" : "", borderWidth: products[item]["discount"] ? "2px" : "1px" }} className="mb-2 shadow-sm item-card">
                             <Card.Body>
                                 <Card.Title>{products[item]["name"]}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted text-capitalize">{products[item]['shop']}</Card.Subtitle>
                             </Card.Body>
-                            <Card.Footer>
+                            <Card.Footer className="d-flex justify-content-between">
                                 <small className="text-muted font-weight-bold"> Price: {Math.round(products[item]['price'] * 100) / 100}&euro;</small>
+                                {products[item]["discount"] ? <small className="font-weight-bold text-warning"> Discount </small> : null }
                             </Card.Footer>
                         </Card>
                         )
