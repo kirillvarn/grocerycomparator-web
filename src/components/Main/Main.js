@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Form, Container, Row, Col, Pagination } from 'react-bootstrap'
 import './Main.css'
-import { config } from '../../credentials'
+import { config } from '../../api'
 
 // COMPONENTS
 

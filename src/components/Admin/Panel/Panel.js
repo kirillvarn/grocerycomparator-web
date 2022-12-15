@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 
-import { config } from '../../../credentials';
+import { config } from '../../../api';
 import * as Helper from '../../Helpers.js';
 
 // Components

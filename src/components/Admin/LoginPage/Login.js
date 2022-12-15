@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import "./Login.css";
 
-import { config } from '../../../credentials';
+import { config } from '../../../api';
 
 import Error from '../../Error/Error';
 import Back from '../../Back/Back';

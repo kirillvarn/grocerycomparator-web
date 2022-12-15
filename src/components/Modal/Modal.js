@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { config } from '../../credentials'
+import { config } from '../../api'
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 
 import { ResponsiveContainer, Tooltip, Line, LineChart, XAxis, CartesianGrid, YAxis } from 'recharts';
