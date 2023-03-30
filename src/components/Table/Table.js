@@ -8,13 +8,7 @@ import "./Table.css";
 function Table(props) {
     const showDiscounted = props.showDiscount;
 
-    const p_dates = props.data['dates']
-    const p_prices = props.data['prices']
-    const p_discounts = props.data['discounts']
-
-    const [dates, setDates] = useState(p_dates)
-    const [prices, setPrices] = useState(p_prices)
-    const [discounts, setDiscounts] = useState(p_discounts)
+    const [data, setData] = useState(props.data)
     const [deviations, setDeviations] = useState([])
 
 
@@ -38,9 +32,9 @@ function Table(props) {
         });
     };
 
-    useEffect(() => {
-        setDeviations(calculateDeviation(Object.values(prices)))
-    }, [prices])
+    // useEffect(() => {
+    //     setDeviations(calculateDeviation(Object.values(prices)))
+    // }, [prices])
 
     const getColorValue = (percent) => {
         if (percent > 0) {
@@ -56,40 +50,46 @@ function Table(props) {
 
     useEffect(() => {
         if (showDiscounted) {
-            const l_prices = discounts.map((discount, index) => {
-                if (!discount) return prices[index]
-            }).filter(value => value !== undefined)
-            const l_dates = discounts.map((discount, index) => {
-                if (!discount) return dates[index]
-            }).filter(value => value !== undefined)
-            const l_discounts = discounts.filter(value => value !== true)
-
-            setDates(l_dates)
-            setPrices(l_prices)
-            setDiscounts(l_discounts)
+            setData(props.data);
         } else {
-            setDates(p_dates)
-            setPrices(p_prices)
-            setDiscounts(p_discounts)
+            const new_data = props.data.filter(entry => entry['discount'] == false);
+            setData(new_data);
         }
     }, [props.showDiscount])
+
+    const colName = {'inserted_at': 'Date'}
+
+    const formatData = (data) => {
+        if (typeof data == 'number') {
+            return Math.round(data * 100, 2)/100;
+        }
+
+        let date = Date.parse(data);
+
+        if (typeof date == 'number') {
+            date = new Date(date);
+            return `${('0' + date.getDate()).slice(-2)}.${("0" + date.getMonth()).slice(-2)}.${date.getFullYear()}`
+        } else {
+            return data;
+        }
+
+    }
 
 
     return (<BTable hover className="shadow-sm border price-table">
         <thead className="bg-dark text-light">
             <tr>
-                {props.cols.map((i, index) => <th className="rounded-top" key={index}>{i}</th>)}
+                {props.cols.map((col, index) => <th className="rounded-top" key={index}>{colName[col] || col}</th>)}
             </tr>
         </thead>
         <tbody>
-            {dates.map((i, index) => {
-                const discount = discounts[index] ? "discounted" : ""
-                return (<tr key={index} className={discount}>
-                    <td>{i == 'initial_products' ? '2022-03-06' : i}</td>
-                    <td>{Math.round(prices[index] * 100) / 100}</td>
-                    <td style={getColorValue(deviations[index])}>{deviations[index]}{deviations.length > 1 ? "%" : ""}</td>
-                </tr>)
-            })}
+            {data.map((entry, index) =>
+                <tr key={index}>
+                    {props.cols.map((col, col_index) =>
+                        <td key={col_index}>{formatData(entry[col])}</td>
+                    )}
+                </tr>
+            )}
         </tbody>
     </BTable>);
 }
