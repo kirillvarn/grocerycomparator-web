@@ -29,12 +29,12 @@ export default function ItemModal(props) {
     const [hideDiscount, setHideDiscount] = useState(false)
 
 
-    const aggregateSeries = () => {
-        const data = priceData.map((_, index) => {
-            return { date: dateList[index], price: Math.round(priceData[index] * 100) / 100, discount: discountList[index] }
-        })
-        return data
-    }
+    // const aggregateSeries = () => {
+    //     const data = priceData.map((_, index) => {
+    //         return { date: dateList[index], price: Math.round(priceData[index] * 100) / 100, discount: discountList[index] }
+    //     })
+    //     return data
+    // }
 
     useEffect(() => {
         fetchProductPrice(props.item.id)

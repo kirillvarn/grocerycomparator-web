@@ -6,35 +6,40 @@ import { Table as BTable } from 'react-bootstrap';
 import "./Table.css";
 
 function Table(props) {
-    const showDiscounted = props.showDiscount;
+    const calculateAndSetDeviation = (data) => {
+        if (data.length == 1) data[0].deviation = 'N/A';
 
-    const [data, setData] = useState(props.data)
-    const [deviations, setDeviations] = useState([])
+        data =
+            data.map((entry, index) => {
+                if (index == 0) entry.deviation = 0;
 
+                if (index > 0) {
+                    const prevItemPrice = data[index - 1].price;
+                    const itemPrice     = data[index].price;
+                    const deviation     = itemPrice/prevItemPrice*100 - 100;
 
-    const calculateDeviation = (prices) => {
-        const pricesLen = prices.length;
+                    entry.deviation = deviation;
+                }
 
-        if (pricesLen == 1) return ["N/A"] // guard in case there is only one price
-
-        return prices.map((item, index) => {
-            if (index == 0) {
-                return 0;
-            }
-            let deviation;
-            if (prices[index - 1] != 0) {
-                deviation = (prices[index] / prices[index - 1]) * 100 - 100;
-            } else {
-                deviation = 100;
-            }
-
-            return Math.round(deviation * 100) / 100;
-        });
+                return entry;
+            });
+        console.log(data)
+        return data;
     };
 
-    // useEffect(() => {
-    //     setDeviations(calculateDeviation(Object.values(prices)))
-    // }, [prices])
+    const showDiscounted = props.showDiscount;
+
+    const [data, setData] = useState(() => {return calculateAndSetDeviation(props.data)})
+    // const [deviations, setDeviations] = useState([])
+    const td = {
+        'inserted_at': inserted_attd,
+        'price': pricetd,
+        'deviation': deviationtd,
+    }
+
+    useEffect(() => {
+        calculateAndSetDeviation(data);
+    }, [data])
 
     const getColorValue = (percent) => {
         if (percent > 0) {
@@ -49,7 +54,7 @@ function Table(props) {
     };
 
     useEffect(() => {
-        if (showDiscounted) {
+        if (!showDiscounted) {
             setData(props.data);
         } else {
             const new_data = props.data.filter(entry => entry['discount'] == false);
@@ -59,22 +64,20 @@ function Table(props) {
 
     const colName = {'inserted_at': 'Date'}
 
-    const formatData = (data) => {
-        if (typeof data == 'number') {
-            return Math.round(data * 100, 2)/100;
-        }
-
-        let date = Date.parse(data);
-
-        if (typeof date == 'number') {
-            date = new Date(date);
-            return `${('0' + date.getDate()).slice(-2)}.${("0" + date.getMonth()).slice(-2)}.${date.getFullYear()}`
-        } else {
-            return data;
-        }
-
+    function inserted_attd(data) {
+        const date = new Date(data);
+        return `${('0' + date.getDate()).slice(-2)}.${("0" + date.getMonth()).slice(-2)}.${date.getFullYear()}`
     }
 
+    function pricetd(data) {
+        return Math.round(data * 100)/100;
+    }
+
+    function deviationtd(data) {
+        const number =  Math.round(data * 100)/100;
+        const string = number > 0 ? `+${number}` : `${number}`;
+        return string;
+    }
 
     return (<BTable hover className="shadow-sm border price-table">
         <thead className="bg-dark text-light">
@@ -84,9 +87,12 @@ function Table(props) {
         </thead>
         <tbody>
             {data.map((entry, index) =>
-                <tr key={index}>
+                <tr key={index} style={getColorValue(entry.deviation)}>
                     {props.cols.map((col, col_index) =>
-                        <td key={col_index}>{formatData(entry[col])}</td>
+                        {
+                            var fn = td[col];
+                            return <td key={col_index}>{fn && fn(entry[col]) || entry[col]}</td>
+                        }
                     )}
                 </tr>
             )}
