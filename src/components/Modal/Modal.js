@@ -37,7 +37,7 @@ export default function ItemModal(props) {
     // }
 
     useEffect(() => {
-        fetchProductPrice(props.item.id)
+        fetchProductPrice(props.legacy ? props.item.itemname : props.item.id)
 
     }, [])
 
@@ -55,8 +55,9 @@ export default function ItemModal(props) {
     //     }
     // }, [hideDiscount])
 
-    const fetchProductPrice = async (id) => {
-        const response = await fetch(URL + `/products/${id}`, parameters);
+    const fetchProductPrice = async (id_or_name) => {
+        const uri = props.legacy ? URL + `/legacy_roducts/${id_or_name}` : URL + `/products/${id_or_name}`;
+        const response = await fetch(uri, parameters);
         await response.json()
             .then((fetched) => {
                 setName(fetched['name'])
@@ -82,7 +83,7 @@ export default function ItemModal(props) {
                 {showTable ?
                     <Row className="w-100">
                         <Col className="rounded-top border m-0 p-0 overflow-hidden w-100">
-                            <Table showDiscount={hideDiscount} data={priceData} cols={['inserted_at', 'price', 'deviation']} />
+                            <Table showDiscount={props.legacy ? !hideDiscount : hideDiscount} data={priceData} cols={['inserted_at', 'price', 'deviation']} />
                         </Col>
                         <Col>
                             <div className="container h-100">

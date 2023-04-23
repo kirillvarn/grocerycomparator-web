@@ -23,8 +23,9 @@ function Header() {
           <div>
             <Link className={getClassName("/")} to="/">Index</Link>
             <Link className={getClassName("/list")} to="/list">List</Link>
-            <Link className={getClassName("/compare")} to="/compare">Compare</Link>
-            <Link className={getClassName("/stat")} to="/stat">Stats</Link>
+            <Link className={getClassName("/archive")} to="/archive">Archive</Link>
+            {/* <Link className={getClassName("/compare")} to="/compare">Compare</Link> */}
+            {/* <Link className={getClassName("/stat")} to="/stat">Stats</Link> */}
           </div>
           <div>
             <Link to="/admin">Admin panel</Link>
